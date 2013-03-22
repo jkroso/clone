@@ -25,35 +25,41 @@ module.exports = clone;
  */
 
 function clone(obj){
-  switch (type(obj)) {
-    case 'object':
-      var copy = {};
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          copy[key] = clone(obj[key]);
-        }
-      }
-      return copy;
-
-    case 'array':
-      var copy = new Array(obj.length);
-      for (var i = 0, l = obj.length; i < l; i++) {
-        copy[i] = clone(obj[i]);
-      }
-      return copy;
-
-    case 'regexp':
-      // from millermedeiros/amd-utils - MIT
-      var flags = '';
-      flags += obj.multiline ? 'm' : '';
-      flags += obj.global ? 'g' : '';
-      flags += obj.ignoreCase ? 'i' : '';
-      return new RegExp(obj.source, flags);
-
-    case 'date':
-      return new Date(obj.getTime());
-
-    default: // string, number, boolean, …
-      return obj;
-  }
+  var fn = clone[type(obj)]
+  return fn ? fn(obj) : obj
 }
+
+clone.object = function(a){
+  var b = {}
+  for (var k in a) {
+    b[k] = clone(a[k]);
+  }
+  return b
+}
+
+clone.array = function(a){
+  var i = a.length
+  var copy = new Array(i);
+  while (i--) {
+    copy[i] = clone(a[i]);
+  }
+  return copy;
+}
+
+clone.regexp = function(a){
+  var flags = ''
+    + (a.multiline ? 'm' : '')
+    + (a.global ? 'g' : '')
+    + (a.ignoreCase ? 'i' : '')
+  return new RegExp(a.source, flags);
+}
+
+clone.date = function(a){
+  return new Date(a.getTime());
+}
+
+clone.string = unbox
+clone.number = unbox
+clone.boolean = unbox
+
+function unbox(a){ return a.valueOf() }
