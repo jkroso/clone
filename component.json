@@ -9,6 +9,7 @@
     "guille/expect.js": "*"
   },
   "scripts": [
-    "index.js"
+    "index.js",
+    "acyclic.js"
   ]
 }
