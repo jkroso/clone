@@ -5,11 +5,9 @@
 
 var type = require('type');
 
-/**
- * Module exports.
- */
-
-module.exports = clone;
+module.exports = function(obj){
+  return clone(obj, [], [])
+}
 
 /**
  * Clones objects.
@@ -18,24 +16,31 @@ module.exports = clone;
  * @api public
  */
 
-function clone(obj){
+function clone(obj, seen, copies){
   var fn = clone[type(obj)]
-  return fn ? fn(obj) : obj
+  return fn ? fn(obj, seen, copies) : obj
 }
 
-clone.object = function(a){
-  var b = {}
+clone.object = function(a, seen, copies){
+  var k = seen.indexOf(a);
+  if (k >= 0) return copies[k];
+  var copy = {};
+  copies.push(copy);
+  seen.push(a);
   for (var k in a) {
-    b[k] = clone(a[k]);
+    copy[k] = clone(a[k], seen, copies);
   }
-  return b
+  return copy
 }
 
-clone.array = function(a){
-  var i = a.length
-  var copy = new Array(i);
+clone.array = function(a, seen, copies){
+  var i = seen.indexOf(a);
+  if (i >= 0) return copies[i];
+  var copy = new Array(i = a.length);
+  seen.push(a);
+  copies.push(copy);
   while (i--) {
-    copy[i] = clone(a[i]);
+    copy[i] = clone(a[i], seen, copies);
   }
   return copy;
 }
@@ -65,10 +70,13 @@ function unbox(a){ return a.valueOf() }
  * @api public
  */
 
-clone.self = function(){
+module.exports.self = function(){
   var module = clone
   for (var k in clone) {
     module += '\nclone.'+k+' = '+clone[k]
   }
-  return eval(module+';clone')
+  module = eval(module+';clone')
+  return function(obj){
+    return module(obj, [], [])
+  }
 }
