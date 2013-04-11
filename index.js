@@ -3,11 +3,8 @@
  * Module dependencies.
  */
 
-var type = require('type');
-
-module.exports = function(obj){
-  return clone(obj, [], [])
-}
+var type = require('type')
+  , create = require('./create')
 
 /**
  * Clones objects.
@@ -16,15 +13,19 @@ module.exports = function(obj){
  * @api public
  */
 
+module.exports = function(obj){
+  return clone(obj, [], []);
+}
+
 function clone(obj, seen, copies){
-  var fn = clone[type(obj)]
-  return fn ? fn(obj, seen, copies) : obj
+  var fn = clone[type(obj)];
+  return fn ? fn(obj, seen, copies) : obj;
 }
 
 clone.object = function(a, seen, copies){
   var k = seen.indexOf(a);
   if (k >= 0) return copies[k];
-  var copy = {};
+  var copy = create(a);
   copies.push(copy);
   seen.push(a);
   for (var k in a) {
