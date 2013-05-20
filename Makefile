@@ -8,11 +8,11 @@ test:
 		--reporter $(REPORTER) \
 		--bail
 
-test/built.js: index.js test/*
+test/built.js: index.js acyclic.js create.js test/*
 	@node_modules/.bin/sourcegraph.js test/browser.js \
 		--plugins mocha,nodeish \
 		| node_modules/.bin/bigfile.js \
 			--export null \
-			--plugins nodeish,javascript > $@
+			--plugins nodeish > $@
 
 .PHONY: test

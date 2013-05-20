@@ -10,6 +10,7 @@
   },
   "scripts": [
     "index.js",
-    "acyclic.js"
+    "acyclic.js",
+    "create.js"
   ]
 }
