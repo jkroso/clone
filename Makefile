@@ -9,9 +9,9 @@ test:
 		--bail
 
 test/built.js: index.js acyclic.js create.js test/*
-	@node_modules/.bin/sourcegraph.js test/browser.js \
+	@node_modules/.bin/sourcegraph test/browser.js \
 		--plugins mocha,nodeish \
-		| node_modules/.bin/bigfile.js \
+		| node_modules/.bin/bigfile \
 			--export null \
 			--plugins nodeish > $@
 
