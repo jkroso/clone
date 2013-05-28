@@ -53,7 +53,7 @@ var handle = {
     for (var k in a) {
       copy[k] = clone(a[k], seen, copies);
     }
-    return copy
+    return copy;
   },
   array: copyArray,
   arguments: copyArray,
@@ -69,7 +69,15 @@ var handle = {
   },
   string: unbox,
   number: unbox,
-  boolean: unbox
+  boolean: unbox,
+  element: function(a, seen, copies){
+    var k = seen.indexOf(a);
+    if (k >= 0) return copies[k];
+    var copy = a.cloneNode(true);
+    copies.push(copy);
+    seen.push(a);
+    return copy;
+  }
 }
 
 function unbox(a){ return a.valueOf() }

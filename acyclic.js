@@ -46,7 +46,10 @@ var handle = {
   },
   string: unbox,
   number: unbox,
-  boolean: unbox
+  boolean: unbox,
+  element: function(a){
+    return a.cloneNode(true);
+  }
 }
 
 function copyArray(a){

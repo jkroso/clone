@@ -54,6 +54,7 @@ function test(clone){
     it('element', function () {
       var div = document.createElement('div');
       expect(clone(div).outerHTML).to.eql('<div></div>');
+      expect(clone(div)).to.not.equal(div);
     });
   }
 
