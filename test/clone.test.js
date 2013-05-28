@@ -77,19 +77,6 @@ function test(clone){
 
 describe('acyclic', function(){
   test(acyclic)
-
-  describe('clone.self()', function(){
-    it('should be completly unique', function(){
-      var c = acyclic.self();
-      expect(c).not.to.be(acyclic);
-      for (var k in acyclic) if (k != 'self') {
-        expect(c).to.have.property(k);
-        expect(c[k]).not.to.be(acyclic[k]);
-      }
-    })
-
-    test(acyclic.self());
-  })
 })
 
 describe('cyclic', function(){
@@ -111,18 +98,5 @@ describe('cyclic', function(){
     var b = cyclic(data);
     expect(b.array).to.eql(data.array);
     expect(b.pair.data).to.be(b);
-  })
-
-  describe('clone.self()', function(){
-    it('should be completly unique', function(){
-      var c = cyclic.self();
-      expect(c).not.to.be(cyclic);
-      for (var k in cyclic) if (k != 'self') {
-        expect(c).to.have.property(k);
-        expect(c[k]).not.to.be(cyclic[k]);
-      }
-    })
-
-    test(cyclic.self());
   })
 })

@@ -59,18 +59,3 @@ function copyArray(a){
 }
 
 function unbox(a){ return a.valueOf() }
-
-/**
- * Clone `clone`.
- * 
- * @return {Function}
- * @api public
- */
-
-clone.self = function(){
-  var module = clone
-  for (var k in clone) {
-    module += '\nclone.'+k+' = '+clone[k]
-  }
-  return eval(module+';clone')
-}

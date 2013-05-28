@@ -85,21 +85,3 @@ function copyArray(a, seen, copies){
   }
   return copy;
 }
-
-/**
- * Clone `clone`.
- * 
- * @return {Function}
- * @api public
- */
-
-module.exports.self = function(){
-  var module = clone;
-  for (var k in clone) {
-    module += '\nclone.'+k+' = '+clone[k];
-  }
-  module = eval(module+';clone');
-  return function(obj){
-    return module(obj, [], []);
-  }
-}
