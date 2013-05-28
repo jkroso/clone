@@ -1,6 +1,6 @@
 {
   "name": "clone",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "dependencies": {
     "jkroso/type": "1.0.1"
   },
