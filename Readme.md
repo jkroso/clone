@@ -1,7 +1,17 @@
 
 # clone
 
-  Object clone supporting `date`, `regexp`, `array` and `object` types.
+  Supported types:
+
++ date
++ regexp
++ array
++ arguments
++ object
++ element
++ string
++ number
++ boolean
 
 ## Example
 
