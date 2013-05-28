@@ -4,6 +4,7 @@
  */
 
 var type = require('type');
+var create = require('./create')
 
 /**
  * Module exports.
@@ -19,19 +20,36 @@ module.exports = clone;
  */
 
 function clone(obj){
-  var fn = clone[type(obj)]
+  var fn = handle[type(obj)]
   return fn ? fn(obj) : obj
 }
 
-clone.object = function(a){
-  var b = {}
-  for (var k in a) {
-    b[k] = clone(a[k]);
-  }
-  return b
+var handle = {
+  object: function(a){
+    var b = create(a);
+    for (var k in a) {
+      b[k] = clone(a[k]);
+    }
+    return b
+  },
+  array: copyArray,
+  arguments: copyArray,
+  regexp: function(a){
+    var flags = ''
+      + (a.multiline ? 'm' : '')
+      + (a.global ? 'g' : '')
+      + (a.ignoreCase ? 'i' : '')
+    return new RegExp(a.source, flags);
+  },
+  date: function(a){
+    return new Date(a.getTime());
+  },
+  string: unbox,
+  number: unbox,
+  boolean: unbox
 }
 
-clone.array = function(a){
+function copyArray(a){
   var i = a.length
   var copy = new Array(i);
   while (i--) {
@@ -39,22 +57,6 @@ clone.array = function(a){
   }
   return copy;
 }
-
-clone.regexp = function(a){
-  var flags = ''
-    + (a.multiline ? 'm' : '')
-    + (a.global ? 'g' : '')
-    + (a.ignoreCase ? 'i' : '')
-  return new RegExp(a.source, flags);
-}
-
-clone.date = function(a){
-  return new Date(a.getTime());
-}
-
-clone.string = unbox
-clone.number = unbox
-clone.boolean = unbox
 
 function unbox(a){ return a.valueOf() }
 
