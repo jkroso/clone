@@ -8,5 +8,6 @@
     "serve": "jkroso/serve",
     "expect.js": "*",
     "mocha": "*"
-  }
+  },
+  "files": ["index.js"]
 }

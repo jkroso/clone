@@ -4,10 +4,9 @@
  */
 
 var type = require('type');
-var create = require('./create');
 
 /**
- * Clones objects.
+ * Clones values
  *
  * @param {Mixed} any object
  * @api public
@@ -47,7 +46,7 @@ var handle = {
   object: function(a, seen, copies){
     var k = seen.indexOf(a);
     if (k >= 0) return copies[k];
-    var copy = create(a);
+    var copy = Object.create(a);
     copies.push(copy);
     seen.push(a);
     for (var k in a) {

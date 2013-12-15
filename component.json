@@ -8,8 +8,5 @@
     "visionmedia/mocha": "*",
     "guille/expect.js": "*"
   },
-  "scripts": [
-    "index.js",
-    "create.js"
-  ]
+  "scripts": ["index.js"]
 }
