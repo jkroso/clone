@@ -1,9 +1,8 @@
 
-var cyclic = require('..');
-var acyclic = require('../acyclic');
 var expect = require('expect.js');
+var clone = require('..');
 
-function test(clone){
+describe('clone', function(){
   it('date', function(){
     var obj = new Date;
     var cloned = clone(obj);
@@ -72,14 +71,6 @@ function test(clone){
     expect(cloned.a.b[3]).to.eql(obj.a.b[3]);
     expect(cloned.a.b[3]).not.to.be(obj.a.b[3]);
   });
-}
-
-describe('acyclic', function(){
-  test(acyclic)
-})
-
-describe('cyclic', function(){
-  test(cyclic);
 
   var data = {
     array: [1,2,3],
@@ -89,12 +80,13 @@ describe('cyclic', function(){
     bool: true,
     function: function(){}
   }
-  var pair = acyclic(data);
+  var pair = Object.create(data);
+  pair.array = pair.array.slice();
   data.pair = pair;
   pair.data = data;
   
   it('should handle cyclic data', function(){
-    var b = cyclic(data);
+    var b = clone(data);
     expect(b.array).to.eql(data.array);
     expect(b.pair.data).to.be(b);
   })
