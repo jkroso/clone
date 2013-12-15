@@ -1,18 +1,12 @@
 {
-  "name": "clone-component",
-  "version": "0.2.0",
+  "name": "clone",
+  "version": "0.3.0",
   "dependencies": {
-    "type": "http://github.com/jkroso/type/tarball/1.0.1"
+    "type": "jkroso/type#1.0.2"
   },
   "devDependencies": {
-    "mocha": "~1.9.0",
+    "serve": "jkroso/serve",
     "expect.js": "*",
-    "sourcegraph": "~0.7.1",
-    "bigfile": "~0.5.2"
-  },
-  "component": {
-    "scripts": {
-      "clone/index.js": "index.js"
-    }
+    "mocha": "*"
   }
 }

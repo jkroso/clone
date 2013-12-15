@@ -1,11 +1,20 @@
-<!doctype html>
-<html>
-<head>
-	<title>clone tests</title>
-	<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
-</head>
-<body>
-	<div id="mocha"></div>
-	<script src="built.js"></script>
-</body>
-</html>
+
+<title>clone tests</title>
+<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+
+<div id="mocha"></div>
+
+<script>
+	var mocha = require('mocha')
+
+	mocha.setup({
+		reporter: 'html',
+		timeout: 200,
+		bail: true,
+		ui: 'bdd'
+	})
+
+	require('./clone.test')
+
+	mocha.run()
+</script>

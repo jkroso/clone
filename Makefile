@@ -1,18 +1,17 @@
+REPORTER=dot
 
-REPORTER = dot
+serve: node_modules
+	@node_modules/serve/bin/serve -Slojp 0
 
-all: test test/built.js
-
-test:
-	@./node_modules/.bin/mocha test/*.test.js \
+test: node_modules
+	@node_modules/mocha/bin/_mocha -b test/*.test.js \
 		--reporter $(REPORTER) \
-		--bail
+		--timeout 500 \
+		--check-leaks
 
-test/built.js: index.js acyclic.js create.js test/*
-	@node_modules/.bin/sourcegraph test/browser.js \
-		--plugins mocha,nodeish \
-		| node_modules/.bin/bigfile \
-			--export null \
-			--plugins nodeish > $@
+node_modules: *.json
+	@packin install -Re \
+		--meta deps.json,package.json,component.json \
+		--folder node_modules
 
-.PHONY: test
+.PHONY: serve test

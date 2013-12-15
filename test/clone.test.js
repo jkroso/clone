@@ -1,6 +1,4 @@
 
-/* test dependencies */
-
 var cyclic = require('..');
 var acyclic = require('../acyclic');
 var expect = require('expect.js');
