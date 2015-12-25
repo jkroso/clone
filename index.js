@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var type = require('type');
+var type = require('@jkroso/type');
 
 /**
  * Clones values
@@ -19,7 +19,7 @@ module.exports = function(obj){
 /**
  * internal dispatcher. if no specific handlers are
  * available `obj` itself will be returned
- * 
+ *
  * @param {X} obj
  * @param {Array} seen
  * @param {Array} copies
@@ -34,7 +34,7 @@ function clone(obj, seen, copies){
 
 /**
  * type specific handlers
- * 
+ *
  * @param {X} a
  * @param {Array} seen
  * @param {Array} copies
